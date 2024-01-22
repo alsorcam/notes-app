@@ -10,18 +10,22 @@ const notes: Array<Note> = reactive([
     title: 'Note 1',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     isPinned: false,
+    creationDate: new Date(),
   },
   {
     id: uuid(),
     title: 'Note 2',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     isPinned: false,
+    creationDate: new Date(),
   },
   {
     id: uuid(),
-    title: 'Note 3',
+    title:
+      'Note 3 - Very long name for testing purposes to check how much looks good in here',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     isPinned: false,
+    creationDate: new Date(),
   },
 ]);
 
@@ -30,7 +34,7 @@ const pinned: Array<Note> = reactive([]);
 function saveNote(note: Note) {
   if (note.id == null) {
     // Create note
-    notes.push({ ...note, id: uuid() });
+    notes.push({ ...note, id: uuid(), creationDate: new Date() });
   } else {
     // Edit note
     const idx = notes.findIndex((item) => item.id === note.id);
@@ -114,8 +118,7 @@ function updatePin(note: Note, isPinned: boolean) {
         @click="editNote(note)"
         @togglePin="updatePin(note, $event)"></Note>
     </div>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Note
         v-for="note in notes"
         v-bind="note"

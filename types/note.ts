@@ -3,4 +3,5 @@ export interface Note {
   title: string;
   text: string;
   isPinned: boolean;
+  creationDate: Date;
 }

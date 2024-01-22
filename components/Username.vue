@@ -4,7 +4,7 @@ const isEditing = ref(false);
 </script>
 
 <template>
-  <h1 class="flex font-bold text-4xl sm:text-5xl">
+  <h1 class="flex">
     <span class="mr-1">Hi,</span>
     <span v-if="!isEditing" class="cursor-pointer" @click="isEditing = true">
       {{ username ?? "what's your name?" }}
@@ -13,6 +13,7 @@ const isEditing = ref(false);
       v-if="isEditing"
       variant="none"
       inputClass="text-4xl sm:text-4xl border-b border-black rounded-none"
+      color="primary"
       v-model="username"
       placeholder="what's your name?"
       @keyup.enter="isEditing = false" />

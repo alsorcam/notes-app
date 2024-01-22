@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   id: String,
   title: String,
   text: String,
@@ -7,11 +7,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 items-center grow cursor-pointer">
-    <div
-      class="h-64 w-full border border-gray-500 py-2 px-3 rounded-lg text-xs text-wrap text-gray-600 truncate">
+  <div
+    class="bg-primary-200 transition duration-300 hover:shadow-lg border-transparent border-2 hover:border-primary-400 flex flex-col gap-4 py-4 px-5 rounded-lg h-48 cursor-pointer">
+    <h2>{{ title }}</h2>
+    <p class="text-sm text-wrap truncate text-gray-800">
       {{ text }}
-    </div>
-    <span class="font-bold">{{ title }}</span>
+    </p>
   </div>
 </template>

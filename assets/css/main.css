@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-orange-50;
+}
+
+h1 {
+  @apply font-bold text-4xl sm:text-5xl;
+}
+
+h2 {
+  @apply font-semibold text-xl sm:text-2xl;
+}

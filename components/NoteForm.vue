@@ -57,7 +57,7 @@ async function onSubmit(event: FormSubmitEvent<NoteFormFields>) {
         label="Delete"
         block
         @click="onDelete()" />
-      <UButton variant="solid" label="Save" type="submit" block />
+      <UButton variant="solid" label="Save" type="submit" block size="lg" />
     </div>
   </UForm>
 </template>

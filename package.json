@@ -10,11 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.7",
     "nuxt": "^3.9.3",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.12.3"
+    "@iconify-json/mdi": "^1.1.64",
+    "@nuxt/ui": "^2.12.3",
+    "uuid": "^9.0.1"
   }
 }

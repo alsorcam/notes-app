@@ -1,25 +1,36 @@
 <script setup lang="ts">
+import { v4 as uuid } from 'uuid';
 import type { Note } from './types/note';
 
 const isFormOpen = ref(false);
 let selectedNote: Note | null = null;
-const notes = reactive([
+const notes: Array<Note> = reactive([
   {
-    id: '1',
-    title: 'Sample title',
+    id: uuid(),
+    title: 'Note 1',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    isPinned: false,
   },
   {
-    id: '2',
-    title: 'Sample title',
+    id: uuid(),
+    title: 'Note 2',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    isPinned: false,
+  },
+  {
+    id: uuid(),
+    title: 'Note 3',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    isPinned: false,
   },
 ]);
+
+const pinned: Array<Note> = reactive([]);
 
 function saveNote(note: Note) {
   if (note.id == null) {
     // Create note
-    notes.push({ ...note, id: (notes.length + 1).toString() });
+    notes.push({ ...note, id: uuid() });
   } else {
     // Edit note
     const idx = notes.findIndex((item) => item.id === note.id);
@@ -31,7 +42,6 @@ function saveNote(note: Note) {
 }
 
 function deleteNote(noteId?: string) {
-  console.log('Delete', noteId);
   if (noteId != null) {
     const idx = notes.findIndex((item) => item.id === noteId);
     if (idx > -1) {
@@ -53,6 +63,19 @@ function openForm() {
 function closeForm() {
   isFormOpen.value = false;
   selectedNote = null;
+}
+
+function updatePin(note: Note, isPinned: boolean) {
+  note.isPinned = isPinned;
+  if (isPinned) {
+    const noteIdx = notes.findIndex((item) => item.id === note.id);
+    notes.splice(noteIdx, 1);
+    pinned.push(note);
+  } else {
+    const noteIdx = pinned.findIndex((item) => item.id === note.id);
+    pinned.splice(noteIdx, 1);
+    notes.push(note);
+  }
 }
 </script>
 
@@ -81,9 +104,23 @@ function closeForm() {
         @delete="deleteNote($event)"
         v-bind="selectedNote" />
     </USlideover>
+
+    <div
+      v-if="pinned.length > 0"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <Note
+        v-for="note in pinned"
+        v-bind="note"
+        @click="editNote(note)"
+        @togglePin="updatePin(note, $event)"></Note>
+    </div>
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <Note v-for="note in notes" v-bind="note" @click="editNote(note)"></Note>
+      <Note
+        v-for="note in notes"
+        v-bind="note"
+        @click="editNote(note)"
+        @togglePin="updatePin(note, $event)"></Note>
     </div>
   </UContainer>
 </template>

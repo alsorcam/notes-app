@@ -54,7 +54,7 @@ function closeForm() {
 <template>
   <UContainer class="flex flex-col gap-12 py-14">
     <div class="flex justify-between items-center">
-      <h1 class="font-bold text-4xl sm:text-5xl">Hi, User!</h1>
+      <Username />
       <UButton
         icon="i-heroicons-plus-solid"
         size="xl"

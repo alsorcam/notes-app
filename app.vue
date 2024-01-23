@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { v4 as uuid } from 'uuid';
 import type { Note } from './types/note';
+import { SortBy } from './types/sort';
 
 const isFormOpen = ref(false);
+let currentSort = SortBy.NEWEST;
 let selectedNote: Note | null = null;
+const pinned: Array<Note> = reactive([]);
 const notes: Array<Note> = reactive([
   {
     id: uuid(),
@@ -29,12 +32,11 @@ const notes: Array<Note> = reactive([
   },
 ]);
 
-const pinned: Array<Note> = reactive([]);
-
 function saveNote(note: Note) {
   if (note.id == null) {
     // Create note
     notes.push({ ...note, id: uuid(), creationDate: new Date() });
+    sortNotes(currentSort);
   } else {
     // Edit note
     const idx = notes.findIndex((item) => item.id === note.id);
@@ -81,10 +83,15 @@ function updatePin(note: Note, isPinned: boolean) {
     notes.push(note);
   }
 }
+
+function sortNotes(sortType: SortBy) {
+  currentSort = sortType;
+  SORT_NOTES[sortType](notes);
+}
 </script>
 
 <template>
-  <UContainer class="flex flex-col gap-12 py-14">
+  <UContainer class="flex flex-col gap-9 py-14">
     <div class="flex justify-between items-center">
       <Username />
       <UButton
@@ -109,6 +116,9 @@ function updatePin(note: Note, isPinned: boolean) {
         v-bind="selectedNote" />
     </USlideover>
 
+    <div class="flex justify-start">
+      <SortDropdown @change-sort="sortNotes($event)"></SortDropdown>
+    </div>
     <div
       v-if="pinned.length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

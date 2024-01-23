@@ -6,6 +6,15 @@ body {
   @apply bg-orange-50;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-display;
+}
+
 h1 {
   @apply font-bold text-4xl sm:text-5xl;
 }

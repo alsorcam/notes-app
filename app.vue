@@ -92,7 +92,8 @@ function sortNotes(sortType: SortBy) {
 
 <template>
   <UContainer class="flex flex-col gap-9 py-14">
-    <div class="flex justify-between items-center">
+    <div
+      class="flex flex-col gap-4 md:flex-row md:justify-between items-center">
       <Username />
       <UButton
         icon="i-heroicons-plus-solid"

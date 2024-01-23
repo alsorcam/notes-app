@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+# Notes App
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Small application to create, edit, and delete notes made with [Nuxt 3](https://nuxt.com/) and [NuxtUI](https://ui.nuxt.com/).
 
 ## Setup
 

@@ -77,50 +77,52 @@ function sortNotes(sortType: SortBy) {
 </script>
 
 <template>
-  <UContainer class="flex flex-col gap-9 py-14">
-    <div
-      class="flex flex-col gap-4 md:flex-row md:justify-between items-center">
-      <Username />
-      <UButton
-        icon="i-heroicons-plus-solid"
-        size="xl"
-        variant="solid"
-        label="Create note"
-        :trailing="false"
-        @click="openForm()" />
-    </div>
-    <USlideover v-model="isFormOpen" prevent-close>
-      <div class="text-right pt-6 px-8">
+  <ClientOnly>
+    <UContainer class="flex flex-col gap-9 py-14">
+      <div
+        class="flex flex-col gap-4 md:flex-row md:justify-between items-center">
+        <Username />
         <UButton
-          color="gray"
-          variant="ghost"
-          icon="i-heroicons-x-mark-20-solid"
-          @click="closeForm()" />
+          icon="i-heroicons-plus-solid"
+          size="xl"
+          variant="solid"
+          label="Create note"
+          :trailing="false"
+          @click="openForm()" />
       </div>
-      <NoteForm
-        @save="saveNote($event)"
-        @delete="deleteNote($event)"
-        v-bind="selectedNote" />
-    </USlideover>
+      <USlideover v-model="isFormOpen" prevent-close>
+        <div class="text-right pt-6 px-8">
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-x-mark-20-solid"
+            @click="closeForm()" />
+        </div>
+        <NoteForm
+          @save="saveNote($event)"
+          @delete="deleteNote($event)"
+          v-bind="selectedNote" />
+      </USlideover>
 
-    <div class="flex justify-start">
-      <SortDropdown @change-sort="sortNotes($event)"></SortDropdown>
-    </div>
-    <div
-      v-if="storage.pinned.length > 0"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <Note
-        v-for="note in storage.pinned"
-        v-bind="note"
-        @click="editNote(note)"
-        @togglePin="updatePin(note, $event)"></Note>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <Note
-        v-for="note in storage.notes"
-        v-bind="note"
-        @click="editNote(note)"
-        @togglePin="updatePin(note, $event)"></Note>
-    </div>
-  </UContainer>
+      <div class="flex justify-start">
+        <SortDropdown @change-sort="sortNotes($event)"></SortDropdown>
+      </div>
+      <div
+        v-if="storage.pinned.length > 0"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <Note
+          v-for="note in storage.pinned"
+          v-bind="note"
+          @click="editNote(note)"
+          @togglePin="updatePin(note, $event)"></Note>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Note
+          v-for="note in storage.notes"
+          v-bind="note"
+          @click="editNote(note)"
+          @togglePin="updatePin(note, $event)"></Note>
+      </div>
+    </UContainer>
+  </ClientOnly>
 </template>
